@@ -18,9 +18,9 @@ static class Program
         {
             b = new Book(title, author, quality, year, publisher);
         }
-        catch
+        catch(Exception e)
         {
-            Console.WriteLine("Det gick inte att skapa boken. Du har skrivit fel någonstans.");
+            Console.WriteLine(e.Message);
         }
         
 
@@ -49,10 +49,11 @@ class Book
 
     public Book(string title, string author, string quality, int year, string publisher)
     {
-        if (title == "")
+        if (title == "" || author == "" || quality == "" || year == 0 || publisher == "")
         {
-            throw new ArgumentException("Title can't be empty");
+            throw new ArgumentException("Du har skrivit fel någonstans.");
         }
+
         this.title = title;
         this.author = author;
         this.quality = quality;
