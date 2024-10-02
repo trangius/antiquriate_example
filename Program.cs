@@ -1,8 +1,15 @@
 ﻿// ska bli ett system för ett antikvariat att hålla reda på alla sina böcker
 static class Program
 {
+    static List<Book> allBooks = new List<Book>();
     static void Main()
     {
+        allBooks.Add(new Book("Divina Comedia", "Dante Alighieri", "Som ny", 2006, "Natur & Kultur"));
+        allBooks.Add(new Book("The Linux Command Line", "William E. Shotts Jr.", "Nära nyskick. Men en stor kaffefläck på baksidan.", 2012, "No Starch Press"));
+        allBooks.Add(new Book("The Art of Computer Programming", "Donald E. Knuth", "Väldigt trasigt exemplar. Den har lästs hundra gånger.\n\nFlera sidor verkar ha ramlat ut men det viktigaste om programmering finns ändå kvar.", 1968, "Addison-Wesley"));
+        allBooks.Add(new Book("The C Programming Language", "Brian W. Kernighan & Dennis M. Ritchie", "Begagnad", 1978, "Prentice Hall"));
+        allBooks.Add(new Book("The Art of Computer Programming", "Donald E. Knuth", "Begagnad", 1968, "Addison-Wesley"));
+
         Console.WriteLine("Välkommen till antikvariatet!");
         bool isRunning = true;
         
@@ -20,25 +27,29 @@ static class Program
             switch(input)
             {
                 case "1":
-                    CreateBook(); // Skapa en ny bok
+                    AddBook(); // Skapa en ny bok
                     break;
                 case "2":
                     PrintAllBooks(); // Skriv ut alla böcker i listan
                     break;
                 case "3":
-                    //PrintBookDetails(); // Skriv ut detaljer för en viss bok
+                    PrintBookDetails(); // Skriv ut detaljer för en viss bok
                     break;
                 case "4": // Avsluta
+                    Console.WriteLine("Tack för idag!");
                     isRunning = false;
                     break;
                 default:
                     Console.WriteLine("Du har skrivit fel, försök igen.");
                     break;
             }
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 
-    public static void CreateBook()
+    // AddBook. Adds a book to the list.
+    public static void AddBook()
     {
         Console.Write("skriv titel:");
         string title = Console.ReadLine();
@@ -52,11 +63,7 @@ static class Program
         string publisher = Console.ReadLine();
         try
         {
-            Book aBook = new Book(title, author, quality, year, publisher);
-            Console.WriteLine($"Just nu är kvaliteten: {aBook.Quality}.");
-            Console.WriteLine("Ange ny kvalitet:");
-            aBook.Quality = Console.ReadLine();
-            // vad ska vi göra med boken???
+            allBooks.Add(new Book(title, author, quality, year, publisher));
         }
         catch(Exception e)
         {
@@ -67,17 +74,32 @@ static class Program
     // PrintAllBooks. Skriver ut info om alla böcker. Men ej deras kvalitet.
     public static void PrintAllBooks()
     {
-        
+        // iterera igenom listan allBooks och skapa en temporär referens b (en bok)
+        // till vardera instans i den listan.
+        for(int i = 0; i < allBooks.Count; i++)
+        {
+            Book theBook = allBooks[i];
+            // skriv ut info om varje bok
+            Console.Write($"Index: {i},");
+            Console.Write($"Title: {theBook.Title, -40}");
+            Console.Write($"Author: {theBook.Author, -35}\t\t\t");
+            Console.Write($"Year: {theBook.Year}");
+            Console.Write($"Publisher: {theBook.Publisher}\n");
+        }
     }
 
     // PrintBookDetails. Skriver ut all info om en viss bok
-    public static void PrintBookDetails(Book theBookToPrint)
+    public static void PrintBookDetails()
     {
-        Console.WriteLine($"Title: {theBookToPrint.Title}");
-        Console.WriteLine($"Author: {theBookToPrint.Author}");
-        Console.WriteLine($"Quality: {theBookToPrint.Quality}");
-        Console.WriteLine($"Year: {theBookToPrint.Year}");
-        Console.WriteLine($"Publisher: {theBookToPrint.Publisher}");
+        PrintAllBooks();
+        Console.Write("Ange index på den du vill se mer info om: ");
+        int i = int.Parse(Console.ReadLine());
+        Book theBook = allBooks[i];
+        Console.WriteLine($"Title: {theBook.Title}");
+        Console.WriteLine($"Author: {theBook.Author}");
+        Console.WriteLine($"Quality: {theBook.Quality}");
+        Console.WriteLine($"Year: {theBook.Year}");
+        Console.WriteLine($"Publisher: {theBook.Publisher}");
     }
 }
 
