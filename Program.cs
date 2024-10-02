@@ -3,6 +3,35 @@ static class Program
 {
     static void Main()
     {
+        Console.WriteLine("Välkommen till antikvariatet!");
+        bool isRunning = true;
+        while(isRunning)
+        {
+            Console.WriteLine("Vad vill du göra?");
+            Console.WriteLine("1. Skapa en bok");
+            Console.WriteLine("2. Lista alla böcker");
+            Console.WriteLine("3. Avsluta programmet");
+            string input = Console.ReadLine();
+            switch(input)
+            {
+                case "1":
+                    CreateBook();
+                    break;
+                case "2":
+                    ListBooks();
+                    break;
+                case "3":
+                    isRunning = false;
+                    break;
+                default:
+                    Console.WriteLine("Du har skrivit fel, försök igen.");
+                    break;
+            }
+        }
+    }
+
+    public static void CreateBook()
+    {
         Console.Write("skriv titel:");
         string title = Console.ReadLine();
         Console.Write("skriv författare:");
@@ -13,29 +42,35 @@ static class Program
         int year = int.Parse(Console.ReadLine());
         Console.Write("skriv förlag:");
         string publisher = Console.ReadLine();
-        Book b = null;
+        Book aBook = null;
         try
         {
-            b = new Book(title, author, quality, year, publisher);
+            aBook = new Book(title, author, quality, year, publisher);
+            Console.WriteLine($"Just nu är kvaliteten: {aBook.Quality}.");
+            Console.WriteLine("Ange ny kvalitet:");
+            aBook.Quality = Console.ReadLine();
         }
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-
-        if (b != null)
+        if (aBook != null)
         {
+            Console.WriteLine("---------------------------");
             Console.WriteLine("detta är boken du skapade:");
-            b.Print();
+            Print(aBook);
         }
         else
         {
             Console.WriteLine("Du har inte skapat någon bok.");
         }
-        
-        Console.WriteLine("Tack för att du använde programmet!");
+    }
 
+    public static void ListBooks()
+    {
+        
+    }
     public static void Print(Book theBookToPrint)
     {
         Console.WriteLine($"Title: {theBookToPrint.Title}");
