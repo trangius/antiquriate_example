@@ -36,16 +36,56 @@ static class Program
         
         Console.WriteLine("Tack för att du använde programmet!");
 
+    public static void Print(Book theBookToPrint)
+    {
+        Console.WriteLine($"Title: {theBookToPrint.Title}");
+        Console.WriteLine($"Author: {theBookToPrint.Author}");
+        Console.WriteLine($"Quality: {theBookToPrint.Quality}");
+        Console.WriteLine($"Year: {theBookToPrint.Year}");
+        Console.WriteLine($"Publisher: {theBookToPrint.Publisher}");
     }
 }
 
 class Book
 {
-    string title;
-    string author;
+    public string Title{get;set;}
+    public string Author{get;set;}
     string quality;
-    int year;
-    string publisher;
+    public int Year{set;get;}
+    public string Publisher{get;set;}
+
+    // Här är en egenskap, Quality (stort Q). Den ska ändra på värdet på den privata
+    // variabeln quality (litet q). Denna egenskap implementerar set- och get-.
+    public string Quality
+    {
+        set
+        {
+            quality = value; 
+        }
+        get
+        {
+            return quality;
+        }
+    }
+
+    // detta är Get- och set-metoder på det traditionella viset,
+    // så som man gjorde i C++, back in the days
+    /*
+    public void SetQuality(string quality)
+    {
+        if (quality == "")
+        {
+            throw new ArgumentException("Du har skrivit fel någonstans.");
+        }
+        this.quality = quality;
+    }
+
+    public string GetQuality()
+    {
+        return quality;
+    }
+    
+    */
 
     public Book(string title, string author, string quality, int year, string publisher)
     {
@@ -54,19 +94,10 @@ class Book
             throw new ArgumentException("Du har skrivit fel någonstans.");
         }
 
-        this.title = title;
-        this.author = author;
-        this.quality = quality;
-        this.year = year;
-        this.publisher = publisher;
-    }
-
-    public void Print()
-    {
-        Console.WriteLine($"Title: {title}");
-        Console.WriteLine($"Author: {author}");
-        Console.WriteLine($"Quality: {quality}");
-        Console.WriteLine($"Year: {year}");
-        Console.WriteLine($"Publisher: {publisher}");
+        Title = title;
+        Author = author;
+        Quality = quality;
+        Year = year;
+        Publisher = publisher;
     }
 }
