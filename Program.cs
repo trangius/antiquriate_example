@@ -1,14 +1,24 @@
-﻿// ska bli ett system för ett antikvariat att hålla reda på alla sina böcker
+﻿using System.Text.Json; 
+
+// ska bli ett system för ett antikvariat att hålla reda på alla sina böcker
 static class Program
 {
     static List<Book> allBooks = new List<Book>();
     static void Main()
     {
-        allBooks.Add(new Book("Divina Comedia", "Dante Alighieri", "Som ny", 2006, "Natur & Kultur"));
+        /*allBooks.Add(new Book("Divina Comedia", "Dante Alighieri", "Som ny", 2006, "Natur & Kultur"));
         allBooks.Add(new Book("The Linux Command Line", "William E. Shotts Jr.", "Nära nyskick. Men en stor kaffefläck på baksidan.", 2012, "No Starch Press"));
         allBooks.Add(new Book("The Art of Computer Programming", "Donald E. Knuth", "Väldigt trasigt exemplar. Den har lästs hundra gånger.\n\nFlera sidor verkar ha ramlat ut men det viktigaste om programmering finns ändå kvar.", 1968, "Addison-Wesley"));
         allBooks.Add(new Book("The C Programming Language", "Brian W. Kernighan & Dennis M. Ritchie", "Begagnad", 1978, "Prentice Hall"));
-        allBooks.Add(new Book("The Art of Computer Programming", "Donald E. Knuth", "Begagnad", 1968, "Addison-Wesley"));
+        allBooks.Add(new Book("The Art of Computer Programming", "Donald E. Knuth", "Begagnad", 1968, "Addison-Wesley"));*/
+
+        /*var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(allBooks, options);
+        //Console.WriteLine(jsonString);
+        File.WriteAllText("allbooks.json", jsonString);*/
+
+        string jsonString = File.ReadAllText("allbooks.json");
+        allBooks = JsonSerializer.Deserialize<List<Book>>(jsonString);
 
         Console.WriteLine("Välkommen till antikvariatet!");
         bool isRunning = true;

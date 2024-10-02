@@ -1,0 +1,37 @@
+[
+  {
+    "Title": "Den Gudomliga Komedin",
+    "Author": "Dante Alighieri",
+    "Year": 2006,
+    "Publisher": "Natur \u0026 Kultur",
+    "Quality": "Som ny"
+  },
+  {
+    "Title": "The Linux Command Line",
+    "Author": "William E. Shotts Jr.",
+    "Year": 2012,
+    "Publisher": "No Starch Press",
+    "Quality": "N\u00E4ra nyskick. Men en stor kaffefl\u00E4ck p\u00E5 baksidan."
+  },
+  {
+    "Title": "The Art of Computer Programming",
+    "Author": "Donald E. Knuth",
+    "Year": 1968,
+    "Publisher": "Addison-Wesley",
+    "Quality": "V\u00E4ldigt trasigt exemplar. Den har l\u00E4sts hundra g\u00E5nger.\n\nFlera sidor verkar ha ramlat ut men det viktigaste om programmering finns \u00E4nd\u00E5 kvar."
+  },
+  {
+    "Title": "The C Programming Language",
+    "Author": "Brian W. Kernighan \u0026 Dennis M. Ritchie",
+    "Year": 1978,
+    "Publisher": "Prentice Hall",
+    "Quality": "Begagnad"
+  },
+  {
+    "Title": "The Art of Computer Programming",
+    "Author": "Donald E. Knuth",
+    "Year": 1968,
+    "Publisher": "Addison-Wesley",
+    "Quality": "Begagnad"
+  }
+]
