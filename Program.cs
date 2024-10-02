@@ -5,22 +5,30 @@ static class Program
     {
         Console.WriteLine("Välkommen till antikvariatet!");
         bool isRunning = true;
+        
+        // Mainloop som hanterar menyn   
         while(isRunning)
         {
             Console.WriteLine("Vad vill du göra?");
             Console.WriteLine("1. Skapa en bok");
             Console.WriteLine("2. Lista alla böcker");
-            Console.WriteLine("3. Avsluta programmet");
+            Console.WriteLine("3. Skriv ut info om en viss bok");
+            Console.WriteLine("4. Avsluta programmet");
+
+            // Tag in användarens input
             string input = Console.ReadLine();
             switch(input)
             {
                 case "1":
-                    CreateBook();
+                    CreateBook(); // Skapa en ny bok
                     break;
                 case "2":
-                    ListBooks();
+                    PrintAllBooks(); // Skriv ut alla böcker i listan
                     break;
                 case "3":
+                    //PrintBookDetails(); // Skriv ut detaljer för en viss bok
+                    break;
+                case "4": // Avsluta
                     isRunning = false;
                     break;
                 default:
@@ -42,36 +50,28 @@ static class Program
         int year = int.Parse(Console.ReadLine());
         Console.Write("skriv förlag:");
         string publisher = Console.ReadLine();
-        Book aBook = null;
         try
         {
-            aBook = new Book(title, author, quality, year, publisher);
+            Book aBook = new Book(title, author, quality, year, publisher);
             Console.WriteLine($"Just nu är kvaliteten: {aBook.Quality}.");
             Console.WriteLine("Ange ny kvalitet:");
             aBook.Quality = Console.ReadLine();
+            // vad ska vi göra med boken???
         }
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
         }
-        
-        if (aBook != null)
-        {
-            Console.WriteLine("---------------------------");
-            Console.WriteLine("detta är boken du skapade:");
-            Print(aBook);
-        }
-        else
-        {
-            Console.WriteLine("Du har inte skapat någon bok.");
-        }
     }
 
-    public static void ListBooks()
+    // PrintAllBooks. Skriver ut info om alla böcker. Men ej deras kvalitet.
+    public static void PrintAllBooks()
     {
         
     }
-    public static void Print(Book theBookToPrint)
+
+    // PrintBookDetails. Skriver ut all info om en viss bok
+    public static void PrintBookDetails(Book theBookToPrint)
     {
         Console.WriteLine($"Title: {theBookToPrint.Title}");
         Console.WriteLine($"Author: {theBookToPrint.Author}");
@@ -81,6 +81,7 @@ static class Program
     }
 }
 
+// Klassen Book håller reda på EN bok och endast EN.
 class Book
 {
     public string Title{get;set;}
@@ -95,7 +96,11 @@ class Book
     {
         set
         {
-            quality = value; 
+            if (quality == "")
+            {
+                throw new ArgumentException("Du har skrivit fel någonstans.");
+            }
+            quality = value;
         }
         get
         {
@@ -103,25 +108,7 @@ class Book
         }
     }
 
-    // detta är Get- och set-metoder på det traditionella viset,
-    // så som man gjorde i C++, back in the days
-    /*
-    public void SetQuality(string quality)
-    {
-        if (quality == "")
-        {
-            throw new ArgumentException("Du har skrivit fel någonstans.");
-        }
-        this.quality = quality;
-    }
-
-    public string GetQuality()
-    {
-        return quality;
-    }
-    
-    */
-
+    // konstruktor
     public Book(string title, string author, string quality, int year, string publisher)
     {
         if (title == "" || author == "" || quality == "" || year == 0 || publisher == "")
