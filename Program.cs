@@ -36,7 +36,6 @@ static class Program
             {
                 case "1":
                     AddBook(); // Skapa en ny bok
-                    var options = new JsonSerializerOptions { WriteIndented = true };
                     jsonString = JsonSerializer.Serialize(allBooks, options);
                     File.WriteAllText("allbooks.json", jsonString);
                     break;
@@ -46,7 +45,17 @@ static class Program
                 case "3":
                     PrintBookDetails(); // Skriv ut detaljer för en viss bok
                     break;
-                case "4": // Avsluta
+                case "4":
+                    //ChangeBook(); // Ändra på info för en bok
+                    jsonString = JsonSerializer.Serialize(allBooks, options);
+                    File.WriteAllText("allbooks.json", jsonString);
+                    break;
+                case "5":
+                    RemoveBook(); // Ta bort en bok
+                    jsonString = JsonSerializer.Serialize(allBooks, options);
+                    File.WriteAllText("allbooks.json", jsonString);
+                    break;
+                case "6": // Avsluta
                     Console.WriteLine("Tack för idag!");
                     isRunning = false;
                     break;
@@ -72,9 +81,20 @@ static class Program
         int year = int.Parse(Console.ReadLine());
         Console.Write("skriv förlag:");
         string publisher = Console.ReadLine();
+        Console.Write("Ange genre:");
+        var values = Enum.GetValues(typeof(Genre));
+        
+        Console.WriteLine("Du har följande enums att välja på. Skriv in index:");
+        for(int i = 0; i < values.Length; i++)
+        {
+            Console.WriteLine(i + ": " + Enum.GetName(typeof(Genre), i));
+        }
+        string genreChoice = Console.ReadLine();
+        Genre genre = (Genre)int.Parse(genreChoice);
+
         try
         {
-            allBooks.Add(new Book(title, author, quality, year, publisher));
+            allBooks.Add(new Book(title, author, quality, year, publisher, genre));
         }
         catch(Exception e)
         {
@@ -95,7 +115,8 @@ static class Program
             Console.Write($"Title: {theBook.Title, -40}");
             Console.Write($"Author: {theBook.Author, -35}\t\t\t");
             Console.Write($"Year: {theBook.Year}");
-            Console.Write($"Publisher: {theBook.Publisher}\n");
+            Console.Write($"Publisher: {theBook.Publisher, -20}");
+            Console.Write($"Genre: {Enum.GetName(typeof(Genre), theBook.Genre)}\n");
         }
     }
 
@@ -104,16 +125,35 @@ static class Program
     {
         PrintAllBooks();
         Console.Write("Ange index på den du vill se mer info om: ");
-        int i = int.Parse(Console.ReadLine());
-        Book theBook = allBooks[i];
+        int indexToGetInfo = int.Parse(Console.ReadLine());
+        Book theBook = allBooks[indexToGetInfo];
         Console.WriteLine($"Title: {theBook.Title}");
         Console.WriteLine($"Author: {theBook.Author}");
-        Console.WriteLine($"Quality: {theBook.Quality}");
         Console.WriteLine($"Year: {theBook.Year}");
         Console.WriteLine($"Publisher: {theBook.Publisher}");
+        Console.WriteLine($"Quality: {theBook.Quality}");
+        Console.WriteLine($"Genre: {Enum.GetName(typeof(Genre), theBook.Genre)}");
+    }
+
+    public static void RemoveBook()
+    {
+        PrintAllBooks();
+        Console.Write("Ange index på den du vill ta bort: ");
+        int indexToRemove = int.Parse(Console.ReadLine());
+        allBooks.RemoveAt(indexToRemove);
     }
 }
 
+enum Genre
+{
+    Unknown,
+    ScienceFiction,
+    Fantasy,
+    Crime,
+    Drama,
+    ComputerScience,
+    Children
+}
 // Klassen Book håller reda på EN bok och endast EN.
 class Book
 {
@@ -122,6 +162,7 @@ class Book
     string quality;
     public int Year{set;get;}
     public string Publisher{get;set;}
+    public Genre Genre{get;set;}
 
     // Här är en egenskap, Quality (stort Q). Den ska ändra på värdet på den privata
     // variabeln quality (litet q). Denna egenskap implementerar set- och get-.
@@ -142,7 +183,7 @@ class Book
     }
 
     // konstruktor
-    public Book(string title, string author, string quality, int year, string publisher)
+    public Book(string title, string author, string quality, int year, string publisher, Genre genre)
     {
         if (title == "" || author == "" || quality == "" || year == 0 || publisher == "")
         {
@@ -154,5 +195,6 @@ class Book
         Quality = quality;
         Year = year;
         Publisher = publisher;
+        Genre = genre;
     }
 }
