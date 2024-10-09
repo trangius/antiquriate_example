@@ -1,6 +1,13 @@
 ﻿using System.Text.Json; 
 
 // ska bli ett system för ett antikvariat att hålla reda på alla sina böcker
+/*
+TODO:
+* mer single responsibility
+* ändra på en bok
+* söka bok
+* utskrift med villkor
+*/
 static class Program
 {
     static List<Book> allBooks = new List<Book>();
