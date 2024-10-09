@@ -13,7 +13,6 @@ static class Program
     static List<Book> allBooks = new List<Book>();
     static void Main()
     {
-
         string jsonString = File.ReadAllText("allbooks.json");
         allBooks = JsonSerializer.Deserialize<List<Book>>(jsonString);
 
@@ -24,11 +23,13 @@ static class Program
         while(isRunning)
         {
             Console.WriteLine("Vad vill du göra?");
-            Console.WriteLine("1. Skapa en bok");
+            Console.WriteLine("1. Lägg till en bok");
             Console.WriteLine("2. Lista alla böcker");
             Console.WriteLine("3. Skriv ut info om en viss bok");
-            Console.WriteLine("4. Avsluta programmet");
-
+            Console.WriteLine("4. Ändra på info för en bok");
+            Console.WriteLine("5. Ta bort en bok");
+            Console.WriteLine("6. Avsluta programmet");
+            var options = new JsonSerializerOptions { WriteIndented = true };
             // Tag in användarens input
             string input = Console.ReadLine();
             switch(input)
